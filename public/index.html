@@ -6,17 +6,17 @@
 </head>
 <body>
 
-<form id="POST">
-    <input type="text" id="x"></input>
+<form id="CALC">
+    <input type="text" id="x" value="0"></input>
     <select id="operation">
-        <option value="plus">+</option>
-        <option value="minus">-</option>
-        <option value="delim">/</option>
-        <option value="composition">*</option>
+        <option value="+">+</option>
+        <option value="-">-</option>
+        <option value="/">/</option>
+        <option value="*">*</option>
     </select>
-    <input type="text" id="y"></input>
+    <input type="text" id="y" value="0"></input>
     <input type="submit" value="=">
-    <label>result</label>
+    <label id="result">0</label>
 </form>
 
 <form id="GET">
@@ -24,7 +24,6 @@
 </form>
 
 <script>
-
     document.onsubmit = function (event) {
         event.preventDefault();
 
@@ -35,7 +34,7 @@
         };
 
         switch (event.target.id) {
-            case 'POST':
+            case 'CALC':
                 let json = JSON.stringify(
                     {
                         "x": document.getElementById('x').value,
@@ -57,7 +56,6 @@
                 break;
         }
     };
-
 </script>
 </body>
 </html>
