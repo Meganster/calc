@@ -16,11 +16,7 @@
     </select>
     <input type="text" id="y" value="0"></input>
     <input type="submit" value="=">
-    <label id="result">0</label>
-</form>
-
-<form id="GET">
-    <input type="submit" value="GET">
+    <input id="result" value="0">
 </form>
 
 <script>
@@ -35,24 +31,24 @@
 
         switch (event.target.id) {
             case 'CALC':
-                let json = JSON.stringify(
-                    {
-                        "x": document.getElementById('x').value,
-                        "y": document.getElementById('y').value,
-                        "operation": document.getElementById('operation').value
-                    }
-                );
+                let fetchTask = fetch(`/send`, {
+                    credentials: 'same-origin',
+                    method: "POST",
+                    body: JSON.stringify({
+                        x: document.getElementById('x').value,
+                        y: document.getElementById('y').value,
+                        operation: document.getElementById('operation').value
+                    })
+                })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log(data);
+                        document.getElementById('result').value = data.result;
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    });
 
-                console.log(json);
-
-                xhr.open('POST', '/send');
-                xhr.setRequestHeader('Content-Type', 'application/json');
-                xhr.send(json);
-                break;
-
-            case 'GET':
-                xhr.open('GET', fileUrl);
-                xhr.send();
                 break;
         }
     };

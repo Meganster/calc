@@ -32,9 +32,12 @@ module.exports = http.createServer((req, res) => {
             req.on('end', () => {
                 dataFromClient = JSON.parse(dataFromClient);
                 console.log(dataFromClient);
-            });
 
-            res.statusCode = 200;
+                res.statusCode = 200;
+                let result = eval(dataFromClient.x + dataFromClient.operation + dataFromClient.y);
+                let json = JSON.stringify({"result": result});
+                res.end(json);
+            });
         }
     }
 });
