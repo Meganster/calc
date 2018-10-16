@@ -11,12 +11,7 @@ module.exports = http.createServer((req, res) => {
     let pathname = decodeURI(url.parse(req.url).pathname);
 
     if (req.method === 'GET') {
-        if (pathname === '/') {
-            sendFile(config.publicRoot + '/index.html', res);
-        } else {
-            let filepath = path.join(config.filesRoot, filename);
-            sendFile(filepath, res);
-        }
+        sendFile(config.publicRoot + '/index.html', res);
     }
 
     if (req.method === 'POST') {
@@ -34,9 +29,21 @@ module.exports = http.createServer((req, res) => {
                 console.log(dataFromClient);
 
                 res.statusCode = 200;
-                let result = eval(dataFromClient.x + dataFromClient.operation + dataFromClient.y);
-                let json = JSON.stringify({"result": result});
-                res.end(json);
+                try {
+                    let result = eval(dataFromClient.x + dataFromClient.operation + dataFromClient.y);
+                    console.log(result);
+                    console.log(typeof result);
+                    if (!isNaN(result) && result != null) {
+                        let json = JSON.stringify({"result": result});
+                        res.end(json);
+                    } else {
+                        throwError();
+                    }
+                } catch (error) {
+                    console.log(error);
+                    let json = JSON.stringify({"result": "error"});
+                    res.end(json);
+                }
             });
         }
     }
