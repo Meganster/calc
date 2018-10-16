@@ -26,13 +26,16 @@ module.exports = http.createServer((req, res) => {
             // The whole response has been received.
             req.on('end', () => {
                 dataFromClient = JSON.parse(dataFromClient);
-                console.log(dataFromClient);
 
                 res.statusCode = 200;
+
                 try {
+                    if(isNaN(dataFromClient.x) || isNaN(dataFromClient.y)) {
+                        throwError();
+                    }
+
                     let result = eval(dataFromClient.x + dataFromClient.operation + dataFromClient.y);
-                    console.log(result);
-                    console.log(typeof result);
+
                     if (!isNaN(result) && result != null) {
                         let json = JSON.stringify({"result": result});
                         res.end(json);
@@ -41,6 +44,7 @@ module.exports = http.createServer((req, res) => {
                     }
                 } catch (error) {
                     console.log(error);
+
                     let json = JSON.stringify({"result": "error"});
                     res.end(json);
                 }
