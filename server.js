@@ -30,7 +30,7 @@ module.exports = http.createServer((req, res) => {
                 res.statusCode = 200;
 
                 try {
-                    if(isNaN(dataFromClient.x) || isNaN(dataFromClient.y)) {
+                    if (isNaN(dataFromClient.x) || isNaN(dataFromClient.y)) {
                         throwError();
                     }
 
