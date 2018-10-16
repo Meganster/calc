@@ -36,7 +36,7 @@ module.exports = http.createServer((req, res) => {
 
                     let result = eval(dataFromClient.x + dataFromClient.operation + dataFromClient.y);
 
-                    if (!isNaN(result) && result != null) {
+                    if (!isNaN(result)) {
                         let json = JSON.stringify({"result": result});
                         res.end(json);
                     } else {
