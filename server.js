@@ -31,16 +31,18 @@ module.exports = http.createServer((req, res) => {
 
                 try {
                     if (isNaN(dataFromClient.x) || isNaN(dataFromClient.y)) {
-                        throwError();
+                        let json = JSON.stringify({"result": "error"});
+                        res.end(json);
                     }
 
                     let result = eval(dataFromClient.x + dataFromClient.operation + dataFromClient.y);
 
-                    if (!isNaN(result)) {
+                    if (!isNaN(parseFloat(result)) && isFinite(result)) {
                         let json = JSON.stringify({"result": result});
                         res.end(json);
                     } else {
-                        throwError();
+                        let json = JSON.stringify({"result": "error"});
+                        res.end(json);
                     }
                 } catch (error) {
                     console.log(error);

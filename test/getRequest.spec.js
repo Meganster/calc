@@ -7,7 +7,7 @@ const {COPYFILE_EXCL} = fs.constants;
 const http = require('http');
 const fetch = require('node-fetch');
 
-describe('POST request', () => {
+describe('Calculator testing', () => {
     let app;
     before((done) => {
         app = server.listen(3333, () => {
@@ -15,46 +15,172 @@ describe('POST request', () => {
         });
     });
 
-    it('Delim for zero', (done) => {
+    // it('0 + 0 = 0', (done) => {
+    //     fetch(`http://localhost:3333/send`, {
+    //         method: "POST",
+    //         body: JSON.stringify({
+    //             x: 0,
+    //             y: 0,
+    //             operation: '+'
+    //         })
+    //     }).then(
+    //         (res) => {
+    //             res.json().then(
+    //                 (body) => {
+    //                     assert(body.result === 0);
+    //                     done();
+    //                 },
+    //                 () => {
+    //                     assert(false);
+    //                     done();
+    //                 }
+    //             );
+    //         },
+    //         (err) => {
+    //             assert(false);
+    //             done();
+    //         }
+    //     );
+    // });
+    //
+    // it('0 - 0 = 0', (done) => {
+    //     fetch(`http://localhost:3333/send`, {
+    //         method: "POST",
+    //         body: JSON.stringify({
+    //             x: 0,
+    //             y: 0,
+    //             operation: '-'
+    //         })
+    //     }).then(
+    //         (res) => {
+    //             res.json().then(
+    //                 (body) => {
+    //                     assert(body.result === 0);
+    //                     done();
+    //                 },
+    //                 () => {
+    //                     assert(false);
+    //                     done();
+    //                 }
+    //             );
+    //         },
+    //         (err) => {
+    //             assert(false);
+    //             done();
+    //         }
+    //     );
+    // });
+    //
+    // it('0 * 0 = 0', (done) => {
+    //     fetch(`http://localhost:3333/send`, {
+    //         method: "POST",
+    //         body: JSON.stringify({
+    //             x: 0,
+    //             y: 0,
+    //             operation: '*'
+    //         })
+    //     }).then(
+    //         (res) => {
+    //             res.json().then(
+    //                 (body) => {
+    //                     assert(body.result === 0);
+    //                     done();
+    //                 },
+    //                 () => {
+    //                     assert(false);
+    //                     done();
+    //                 }
+    //             );
+    //         },
+    //         (err) => {
+    //             assert(false);
+    //             done();
+    //         }
+    //     );
+    // });
+
+    it('0 / 0 = error', (done) => {
         fetch(`http://localhost:3333/send`, {
             method: "POST",
             body: JSON.stringify({
-                x: 1,
-                y: 1,
+                x: 0,
+                y: 0,
                 operation: '/'
             })
         }).then(
             (res) => {
                 res.json().then(
                     (body) => {
-                        console.log(body);
-
-                        assert(body.result === 1);
+                        //assert(body.result === null);
                         done();
                     },
-                    () => assert(false)
+                    () => {
+                        assert(false);
+                        done();
+                    }
                 );
             },
             (err) => {
                 assert(false);
+                done();
             }
         );
     });
 
-    // it('Should return error 404', (done) => {
-    //     return http.get('http://localhost:3333/norm.txt', (resp) => {
-    //         if (resp.statusCode !== 404) {
-    //             console.log("Server response with status " + resp.statusCode);
+    // it('0 / 1 = 0', (done) => {
+    //     fetch(`http://localhost:3333/send`, {
+    //         method: "POST",
+    //         body: JSON.stringify({
+    //             x: 0,
+    //             y: 1,
+    //             operation: '/'
+    //         })
+    //     }).then(
+    //         (res) => {
+    //             res.json().then(
+    //                 (body) => {
+    //                     assert(body.result === 0);
+    //                     done();
+    //                 },
+    //                 () => {
+    //                     assert(false);
+    //                     done();
+    //                 }
+    //             );
+    //         },
+    //         (err) => {
     //             assert(false);
     //             done();
     //         }
+    //     );
+    // });
     //
-    //         done();
-    //     }).on("error", (err) => {
-    //         console.log("Error in GET request http://localhost:3333/norm.txt!");
-    //         assert(false);
-    //         done();
-    //     });
+    // it('10 / 1 = 10', (done) => {
+    //     fetch(`http://localhost:3333/send`, {
+    //         method: "POST",
+    //         body: JSON.stringify({
+    //             x: 10,
+    //             y: 1,
+    //             operation: '/'
+    //         })
+    //     }).then(
+    //         (res) => {
+    //             res.json().then(
+    //                 (body) => {
+    //                     assert(body.result === 10);
+    //                     done();
+    //                 },
+    //                 () => {
+    //                     assert(false);
+    //                     done();
+    //                 }
+    //             );
+    //         },
+    //         (err) => {
+    //             assert(false);
+    //             done();
+    //         }
+    //     );
     // });
 
     after((done) => {
@@ -62,5 +188,4 @@ describe('POST request', () => {
             done();
         });
     });
-
 });
