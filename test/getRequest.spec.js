@@ -183,7 +183,203 @@ describe('Calculator testing', () => {
         );
     });
 
-    it('Should base index.html', (done) => {
+    it('str / 1 = error', (done) => {
+        fetch(`http://localhost:3333/send`, {
+            method: "POST",
+            body: JSON.stringify({
+                x: "str",
+                y: 1,
+                operation: '/'
+            })
+        }).then(
+            (res) => {
+                res.json().then(
+                    (body) => {
+                        assert(body.result === "error");
+                        done();
+                    },
+                    () => {
+                        assert(false);
+                        done();
+                    }
+                );
+            },
+            (err) => {
+                assert(false);
+                done();
+            }
+        );
+    });
+
+    it('str + 132525 = error', (done) => {
+        fetch(`http://localhost:3333/send`, {
+            method: "POST",
+            body: JSON.stringify({
+                y: 132525,
+                x: "str",
+                operation: '+'
+            })
+        }).then(
+            (res) => {
+                res.json().then(
+                    (body) => {
+                        assert(body.result === "error");
+                        done();
+                    },
+                    () => {
+                        assert(false);
+                        done();
+                    }
+                );
+            },
+            (err) => {
+                assert(false);
+                done();
+            }
+        );
+    });
+
+    it('912 * str = error', (done) => {
+        fetch(`http://localhost:3333/send`, {
+            method: "POST",
+            body: JSON.stringify({
+                x: 912,
+                y: "str",
+                operation: '*'
+            })
+        }).then(
+            (res) => {
+                res.json().then(
+                    (body) => {
+                        assert(body.result === "error");
+                        done();
+                    },
+                    () => {
+                        assert(false);
+                        done();
+                    }
+                );
+            },
+            (err) => {
+                assert(false);
+                done();
+            }
+        );
+    });
+
+    it('str1214 + str = error', (done) => {
+        fetch(`http://localhost:3333/send`, {
+            method: "POST",
+            body: JSON.stringify({
+                x: "str1214",
+                y: "str",
+                operation: '+'
+            })
+        }).then(
+            (res) => {
+                res.json().then(
+                    (body) => {
+                        assert(body.result === "error");
+                        done();
+                    },
+                    () => {
+                        assert(false);
+                        done();
+                    }
+                );
+            },
+            (err) => {
+                assert(false);
+                done();
+            }
+        );
+    });
+
+    it('str1214 - spaosa = error', (done) => {
+        fetch(`http://localhost:3333/send`, {
+            method: "POST",
+            body: JSON.stringify({
+                x: "str1214",
+                y: "spaosa",
+                operation: '-'
+            })
+        }).then(
+            (res) => {
+                res.json().then(
+                    (body) => {
+                        assert(body.result === "error");
+                        done();
+                    },
+                    () => {
+                        assert(false);
+                        done();
+                    }
+                );
+            },
+            (err) => {
+                assert(false);
+                done();
+            }
+        );
+    });
+
+    it('str1214 * spaosa = error', (done) => {
+        fetch(`http://localhost:3333/send`, {
+            method: "POST",
+            body: JSON.stringify({
+                x: "str1214",
+                y: "spaosa",
+                operation: '*'
+            })
+        }).then(
+            (res) => {
+                res.json().then(
+                    (body) => {
+                        assert(body.result === "error");
+                        done();
+                    },
+                    () => {
+                        assert(false);
+                        done();
+                    }
+                );
+            },
+            (err) => {
+                assert(false);
+                done();
+            }
+        );
+    });
+
+    it('str1214 / spaosa = error', (done) => {
+        fetch(`http://localhost:3333/send`, {
+            method: "POST",
+            body: JSON.stringify({
+                x: "str1214",
+                y: "spaosa",
+                operation: '/'
+            })
+        }).then(
+            (res) => {
+                res.json().then(
+                    (body) => {
+                        assert(body.result === "error");
+                        done();
+                    },
+                    () => {
+                        assert(false);
+                        done();
+                    }
+                );
+            },
+            (err) => {
+                assert(false);
+                done();
+            }
+        );
+    });
+
+    it('Should return base index.html', (done) => {
         return http.get('http://localhost:3333', (resp) => {
             let dataFromServer = '';
 

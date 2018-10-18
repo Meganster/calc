@@ -56,21 +56,6 @@ function sendFile(filepath, res) {
     fileStream.pipe(res);
 
     fileStream
-        .on('error', err => {
-            if (err.code === 'ENOENT') {
-                res.statusCode = 404;
-                res.end('Not found');
-            } else {
-                console.error(err);
-                if (!res.headersSent) {
-                    res.statusCode = 500;
-                    res.end('Internal error');
-                } else {
-                    res.end();
-                }
-
-            }
-        })
         .on('open', () => {
             res.setHeader('Content-Type', mime.lookup(filepath));
         });
