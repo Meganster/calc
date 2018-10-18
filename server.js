@@ -31,8 +31,7 @@ module.exports = http.createServer((req, res) => {
 
                 try {
                     if (isNaN(dataFromClient.x) || isNaN(dataFromClient.y)) {
-                        let json = JSON.stringify({"result": "error"});
-                        res.end(json);
+                        throw(new Error());
                     }
 
                     let result = eval(dataFromClient.x + dataFromClient.operation + dataFromClient.y);
@@ -41,12 +40,9 @@ module.exports = http.createServer((req, res) => {
                         let json = JSON.stringify({"result": result});
                         res.end(json);
                     } else {
-                        let json = JSON.stringify({"result": "error"});
-                        res.end(json);
+                        throw(new Error());
                     }
                 } catch (error) {
-                    console.log(error);
-
                     let json = JSON.stringify({"result": "error"});
                     res.end(json);
                 }
