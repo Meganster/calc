@@ -30,11 +30,15 @@ module.exports = http.createServer((req, res) => {
                 res.statusCode = 200;
 
                 try {
-                    if (isNaN(dataFromClient.x) || isNaN(dataFromClient.y)) {
+                    if (!isNumber(dataFromClient.x) || !isNumber(dataFromClient.y)) {
                         throw(new Error());
                     }
 
-                    let result = eval(dataFromClient.x + dataFromClient.operation + dataFromClient.y);
+                    let result = calculate(
+                        parseFloat(dataFromClient.x),  
+                        parseFloat(dataFromClient.y), 
+                        dataFromClient.operation
+                    );
 
                     if (!isNaN(parseFloat(result)) && isFinite(result)) {
                         let json = JSON.stringify({"result": result});
@@ -50,6 +54,26 @@ module.exports = http.createServer((req, res) => {
         }
     }
 });
+
+function calculate(x, y, operationStr) {
+    switch(operationStr) {
+        case '+':
+            return x + y;
+        case '-':
+            return x - y;
+        case '*':
+            return x * y;
+        case '/':
+            return x / y;
+
+        default: 
+            throw(new Error());
+    }
+}
+
+function isNumber(n) {
+     return /^-?[\d.]+(?:e-?\d+)?$/.test(n); 
+} 
 
 function sendFile(filepath, res) {
     let fileStream = fs.createReadStream(filepath);
